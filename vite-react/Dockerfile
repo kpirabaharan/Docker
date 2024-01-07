@@ -2,26 +2,26 @@ ARG NODE_VERSION=latest
 
 FROM node:${NODE_VERSION}
 
-USER root
-
-RUN mkdir /home/app && chown -R node:node /home/app
-
-# Use production node environment by default.
+# Use development node environment by default.
 ENV NODE_ENV development
 
-# Run the application as a non-root user.
-USER node
+USER root
 
-WORKDIR /home/app
+# Create the application directory.
+RUN mkdir /usr/src/app
 
-# copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Set the working directory.
+WORKDIR /usr/src/app
+
+# copy package.json to the working directory
+COPY package.json /usr/src/app
 
 # install dependencies
-RUN npm install
+RUN npm i
 
-# Copy the rest of the source files into the image.
-COPY . .
+# Change the ownership of the /usr/src/app directory back to the node user.
+RUN chown -R node:node /usr/src/app
+USER node
 
 # Expose the port that the application listens on.
 EXPOSE 5173
