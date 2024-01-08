@@ -1,10 +1,10 @@
-ARG NODE_VERSION=latest
+ARG NODE_VERSION=21
 
-FROM node:${NODE_VERSION}
+FROM node:${NODE_VERSION}-alpine
 
 ENV NODE_ENV development
 
-RUN mkdir /usr/src/app
+RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
@@ -13,8 +13,6 @@ COPY package.json /usr/src/app
 RUN npm i
 
 COPY . .
-
-RUN apt-get update && apt-get install -y net-tools
 
 EXPOSE 5173
 

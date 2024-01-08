@@ -1,10 +1,10 @@
-ARG NODE_VERSION=latest
+ARG NODE_VERSION=21
 
-FROM node:${NODE_VERSION}
+FROM node:${NODE_VERSION}-alpine
 
 ENV NODE_ENV development
 
-RUN mkdir /usr/src/app
+RUN mkdir -p /usr/src/app
 
 WORKDIR /usr/src/app
 
