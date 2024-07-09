@@ -1,0 +1,22 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres:15.0
+    restart: always
+    command: postgres -c config_file=/config/postgresql.conf
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+      PGDATA: /data
+    volumes:
+      - ./data:/data
+      - ./config:/config
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    ports:
+      - 8080:8080
